@@ -1,0 +1,16 @@
+version: '3.9'
+services:
+  openweatherapi: 
+    build: 
+      #$LAT and $LON are referencing the shell environment LAT and LON variables
+      #and passing it to the Dockerfile LAT, LONG
+      #the syntax below ensures that the LAT, LONG arg will default to 
+      #5.902785 if empty.
+      #note that is dockerfile: is not specified it assumes file name: Dockerfile
+      context: .
+      args:
+        - LAT=${LAT:-5.902785}
+        - LONG=${LONG:-102.754175}
+    environment: 
+      - LAT=${LAT:-5.902785}
+      - LONG=${LONG:-"102.754175"}
