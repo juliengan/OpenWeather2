@@ -1,4 +1,4 @@
-name: GitHub Actions Demo
+name: GitHub Actions Buld and Push
 on: [push]
 jobs:
 Explore-GitHub-Actions:
@@ -14,3 +14,7 @@ uses: actions/checkout@v3
 run: |
 ls ${{ github.workspace }}
 - run: echo "This job's status is ${{ job.status }}."
+
+- name: Build and push Docker images
+  uses: docker/build-push-action@v3.0.0
+- run: echo "Builded and pushed new commits to dockerhub."
