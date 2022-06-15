@@ -16,11 +16,12 @@ docker tag efrei-devops-tp2:0.0.1 juliengan/efrei-devops-tp2:0.0.1 # I tag it
 docker push juliengan/efrei-devops-tp2:0.0.1 # I publish my image to dockerhub
 
 ### Run the code
-go get github.com/gorilla/mux
+#### For the API
+go get github.com/gorilla/mux 
+
 docker run -it efrei-devops-tp2:0.0.1 go run main.go 
 
-docker run --network host --env API_KEY="62bd02468799bb9568074245d9b8631e" efrei-devops-tp2:0.0.1 #API returning the weather using the image with location as input
+docker run --network host --env API_KEY="62bd02468799bb9568074245d9b8631e" efrei-devops-tp2:0.0.1 go run main.go
 
-
-
-curl "http://localhost:8081/?lat=5.902785&lon=102.754175"
+#### Retrieve information in console
+curl "http://localhost:8081/weather"
