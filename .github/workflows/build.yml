@@ -2,29 +2,34 @@ name: CI
 on:
   push:
     branches:
-     _'*'
+      - '*'
     tags:
-     _'*'
+      - '*'
   pull_request:
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Install PHP
-      run : //stuff to install PHP
-    - name: Test
-      run: ./bin/phpunit
+    - uses: actions/checkout@v3
+    - uses: actions/setup-go@v3
+      with:
+        go-version: '1.17.11'
+    - name: Install mux 
+      run : go get github.com/gorilla/mux
+    - name: Run
+      run: go run main.go
+   # - name: Build the docker image
+    #  run: docker build . -t efrei-devops-tp2:0.0.1
   publish_docker_images:
     needs: build
     runs-on: ubuntu-latest
     if: GitHub.ref == 'refs/heads/master' || GitHub.event_name == 'release'
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: Docker meta
       id: meta
-      uses: crazy-max/ghaction-docker-meta@v2
+      uses: crazy-max/ghaction-docker-meta@v3
       with:
         images: juliengan/efrei-devops-tp2:0.0.1
         tags: |
@@ -39,7 +44,7 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
     - name: Build and push
-      uses: docker/build-push-action@v2
+      uses: docker/build-push-action@v3
       with:
        context: .
        push: ${{ GitHub.event_name != 'pull_request' }}
