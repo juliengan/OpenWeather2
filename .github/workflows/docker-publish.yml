@@ -1,11 +1,5 @@
 name: CI
-on:
-  push:
-    branches: 
-      _ '*'
-    tags: 
-      _ '*'
-  pull_request:
+on: push
 
 jobs:
   publish_docker_images:
